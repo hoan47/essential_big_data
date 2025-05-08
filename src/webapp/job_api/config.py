@@ -5,9 +5,7 @@ load_dotenv()
 
 class Config:
     API_KEY = os.getenv("API_KEY")
-    # Cấu hình Hive (dùng sau này)
-    HIVE_HOST = os.getenv("HIVE_HOST", "localhost")
-    HIVE_PORT = os.getenv("HIVE_PORT", 10000)
-    HIVE_DATABASE = os.getenv("HIVE_DATABASE", "default")
-    HIVE_USERNAME = os.getenv("HIVE_USERNAME", None)
-    HIVE_PASSWORD = os.getenv("HIVE_PASSWORD", None)
+    HIVE_HOST = os.getenv("HIVE_HOST")
+    HIVE_PORT = int(os.getenv("HIVE_PORT"))
+    HIVE_DATABASE = os.getenv("HIVE_DB")
+    HIVE_USERNAME = os.getenv("HIVE_USER")

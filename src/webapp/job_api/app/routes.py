@@ -1,12 +1,12 @@
 from flask import jsonify, request
 from .middleware import require_api_key
-from .models import get_all_jobs, get_job_by_id, create_job, update_job, delete_job
+from .models import get_jobs
 
 def init_routes(app):
     @app.route('/jobs', methods=['GET'])
-    @require_api_key
-    def get_jobs():
-        # Lấy tất cả query params
+    # @require_api_key
+    def get_jobs_route():
+        # Lấy query params
         filters = {
             'jobId': request.args.get('jobId'),
             'jobTitle': request.args.get('jobTitle'),
@@ -19,8 +19,14 @@ def init_routes(app):
             'cities': request.args.get('cities'),
             'salaryCurrency': request.args.get('salaryCurrency'),
         }
-        # Xoá các filter nào không được truyền vào
-        filters = {k: v for k, v in filters.items() if v is not None}
 
-        jobs = get_all_jobs(filters)
+        # Gọi hàm từ models.py
+        jobs, error = get_jobs(filters)
+        if error:
+            return jsonify({'error': error}), 500
         return jsonify(jobs)
+
+    # Xử lý lỗi 401
+    @app.errorhandler(401)
+    def unauthorized(e):
+        return jsonify({'error': str(e)}), 401
