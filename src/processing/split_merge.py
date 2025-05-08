@@ -3,7 +3,6 @@ import os
 
 # Load file CSV
 df = pd.read_csv("merge.csv", encoding="utf-8")
-df = df.iloc[1:]
 
 # Tạo bảng benefit duy nhất (loại bỏ khoảng trắng)
 benefit_series = df['benefitNames'].dropna().str.split(', ').explode().str.strip()
@@ -45,9 +44,10 @@ job_city_df = job_city_df.merge(city_df, on='city', how='left')
 job_city_df = job_city_df[['jobId', 'city_id']]
 
 # Lưu từng bảng vào file CSV
-job_df.to_csv("job.csv", index=False, encoding='utf-8-sig')
-benefit_df.to_csv("benefit.csv", index=False, encoding='utf-8-sig')
-city_df.to_csv("city.csv", index=False, encoding='utf-8-sig')
-company_df.to_csv("company.csv", index=False, encoding='utf-8-sig')
-job_benefit_df.to_csv("job_benefit.csv", index=False, encoding='utf-8-sig')
-job_city_df.to_csv("job_city.csv", index=False, encoding='utf-8-sig')
+job_df.to_csv("job.csv", index=False, encoding='utf-8-sig', header=False, sep='\t')
+benefit_df.to_csv("benefit.csv", index=False, encoding='utf-8-sig', header=False, sep='\t')
+city_df.to_csv("city.csv", index=False, encoding='utf-8-sig', header=False, sep='\t')
+company_df.to_csv("company.csv", index=False, encoding='utf-8-sig', header=False, sep='\t')
+job_benefit_df.to_csv("job_benefit.csv", index=False, encoding='utf-8-sig', header=False, sep='\t')
+job_city_df.to_csv("job_city.csv", index=False, encoding='utf-8-sig', header=False, sep='\t')
+
