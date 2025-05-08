@@ -3,6 +3,7 @@ import os
 
 # Load file CSV
 df = pd.read_csv("merge.csv", encoding="utf-8")
+df = df.iloc[1:]
 
 # Tạo bảng benefit duy nhất (loại bỏ khoảng trắng)
 benefit_series = df['benefitNames'].dropna().str.split(', ').explode().str.strip()

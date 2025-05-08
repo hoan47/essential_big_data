@@ -63,6 +63,10 @@ with open('merge.csv', 'w', encoding='utf-8-sig', newline='') as f:
         for key in ['benefitNames', 'cities']:
             if key in row and isinstance(row[key], list):
                 row[key] = ', '.join(row[key])
+        for key in fieldnames:
+            value = row.get(key, "")
+            if isinstance(value, str):
+                row[key] = value.replace(",", "-")
         filtered_row = {key: row.get(key, "") for key in fieldnames}
         writer.writerow(filtered_row)
 

@@ -61,9 +61,9 @@ FIELDS TERMINATED BY ','
 STORED AS TEXTFILE;
 
 --Load data
-LOAD DATA INPATH '/user/b2hhduser/data/job.csv' INTO TABLE jobs;
-LOAD DATA INPATH '/user/b2hhduser/data/benefit.csv' INTO TABLE benefit;
-LOAD DATA INPATH '/user/b2hhduser/data/city.csv' INTO TABLE city;
-LOAD DATA INPATH '/user/b2hhduser/data/company.csv' INTO TABLE company;
-LOAD DATA INPATH '/user/b2hhduser/data/job_benefit.csv' INTO TABLE job_benefit;
-LOAD DATA INPATH '/user/b2hhduser/data/job_city.csv' INTO TABLE job_city;
+LOAD DATA INPATH '/user/data/job.csv' INTO TABLE job;
+LOAD DATA INPATH '/user/data/benefit.csv' INTO TABLE benefit;
+LOAD DATA INPATH '/user/data/city.csv' INTO TABLE city;
+LOAD DATA INPATH '/user/data/company.csv' INTO TABLE company;
+LOAD DATA INPATH '/user/data/job_benefit.csv' INTO TABLE job_benefit;
+LOAD DATA INPATH '/user/data/job_city.csv' INTO TABLE job_city;
