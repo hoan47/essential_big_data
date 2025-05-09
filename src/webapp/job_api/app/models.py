@@ -1,15 +1,16 @@
 from .database import get_hive_connection
 
+import math
+
+import math
+
 def get_jobs(filters):
     try:
         conn = get_hive_connection()
-        if not conn:
-            return None, "Không thể kết nối Hive"
-        
         cursor = conn.cursor()
 
-        # Base query
-        query = """
+        # --- Build query ---
+        base_query = """
             SELECT
                 jobId,
                 jobTitle,
@@ -26,94 +27,122 @@ def get_jobs(filters):
             FROM merge_job
         """
 
-        # Build WHERE conditions
         conditions = []
-
         if filters.get('jobTitle'):
             conditions.append(f"lower(jobTitle) LIKE '%{filters['jobTitle'].lower()}%'")
-
         if filters.get('companyName'):
             conditions.append(f"lower(companyName) LIKE '%{filters['companyName'].lower()}%'")
-
         if filters.get('salaryMin'):
             conditions.append(f"salaryMin >= {filters['salaryMin']}")
-
         if filters.get('salary'):
             conditions.append(f"salary >= {filters['salary']}")
-
         if filters.get('salaryCurrency'):
             conditions.append(f"salaryCurrency = '{filters['salaryCurrency']}'")
-
-        # benefitNames là list
         if filters.get('benefitNames'):
             benefit_conditions = [f"lower(benefitNames) LIKE '%{benefit.lower()}%'" for benefit in filters['benefitNames']]
             conditions.append(f"({' OR '.join(benefit_conditions)})")
-
-        # cities là list
         if filters.get('cities'):
             city_conditions = [f"lower(cities) LIKE '%{city.lower()}%'" for city in filters['cities']]
             conditions.append(f"({' OR '.join(city_conditions)})")
 
-        # Thêm WHERE nếu có điều kiện
+        if conditions:
+            base_query += " WHERE " + " AND ".join(conditions)
+
+        # --- Query hết data (KHÔNG LIMIT) ---
+        cursor.execute(base_query)
+        rows = cursor.fetchall()
+        columns = [col[0] for col in cursor.description]
+        conn.close()
+
+        # --- Xử lý phân trang ---
+        total_items = len(rows)
+        items_per_page = filters.get('items_per_page')
+        page = filters.get('page')
+        offset = (page - 1) * items_per_page
+
+        paginated_rows = rows[offset: offset + items_per_page]
+
+        result = [dict(zip(columns, row)) for row in paginated_rows]
+        total_pages = math.ceil(total_items / items_per_page)
+
+        return {
+            'jobs': result,
+            'total_pages': total_pages
+        }, None
+
+    except Exception as e:
+        return None, str(e)
+
+
+def get_job_titles(filters):
+    try:
+        conn = get_hive_connection()
+        cursor = conn.cursor()
+
+        query = """
+            SELECT
+                jobId,
+                jobTitle,
+                jobUrl,
+                companyLogo
+            FROM merge_job
+        """
+
+        conditions = []
+        if filters.get('jobTitle'):
+            job_title = filters['jobTitle'].lower()
+            conditions.append(f"lower(jobTitle) LIKE '%{job_title}%'")
+
         if conditions:
             query += " WHERE " + " AND ".join(conditions)
 
-        # Pagination
-        page = filters.get('page', 1)
-        items_per_page = filters.get('items_per_page', 10)
-        offset = (page - 1) * items_per_page
+        if filters.get('limit'):
+            query += f" LIMIT {int(filters['limit'])}"
 
-        query += f" LIMIT {items_per_page}"
-
-        print("[QUERY]", query)
         cursor.execute(query)
         rows = cursor.fetchall()
         conn.close()
 
-        # Chuyển thành list dict
-        result = []
-        columns = [col[0] for col in cursor.description]
-        for row in rows:
-            result.append(dict(zip(columns, row)))
-
-        return result, None
-
-    except Exception as e:
-        return None, str(e)
-    
-def get_job_titles():
-    try:
-        conn = get_hive_connection()
-        cursor = conn.cursor()
-        cursor.execute("""
-            SELECT DISTINCT jobTitle
-            FROM merge_job
-        """)
-        rows = cursor.fetchall()
-        conn.close()
-
         job_titles = [{
-            'jobTitle': row[0]
+            'jobId': row[0],
+            'jobTitle': row[1],
+            'jobUrl': row[2],
+            'companyLogo': row[3]
         } for row in rows]
+
 
         return job_titles, None
     except Exception as e:
         return None, str(e)
-    
 
-def get_companies():
+
+def get_companies(filters):
     try:
         conn = get_hive_connection()
         cursor = conn.cursor()
-        cursor.execute("""
+
+        query = """
             SELECT company_id, companyName, companyLogo
             FROM company
-        """)
+        """
+
+        conditions = []
+        if filters.get('companyName'):
+            company_name = filters['companyName'].lower()
+            conditions.append(f"lower(companyName) LIKE '%{company_name}%'")
+
+        if conditions:
+            query += " WHERE " + " AND ".join(conditions)
+
+        if filters.get('limit'):
+            query += f" LIMIT {int(filters['limit'])}"
+
+        cursor.execute(query)
         rows = cursor.fetchall()
         conn.close()
 
         companies = [{
-            'companyId': row[0],
+            'company_id': row[0],
             'companyName': row[1],
             'companyLogo': row[2]
         } for row in rows]
