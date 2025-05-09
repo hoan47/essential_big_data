@@ -94,3 +94,6 @@ LOAD DATA INPATH '/user/b2hhduser/data/city.csv' INTO TABLE city;
 LOAD DATA INPATH '/user/b2hhduser/data/company.csv' INTO TABLE company;
 LOAD DATA INPATH '/user/b2hhduser/data/job_benefit.csv' INTO TABLE job_benefit;
 LOAD DATA INPATH '/user/b2hhduser/data/job_city.csv' INTO TABLE job_city;
+LOAD DATA INPATH '/user/b2hhduser/data/merge.csv' INTO TABLE merge_job;
+
+
