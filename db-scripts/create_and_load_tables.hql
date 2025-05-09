@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS job (
     company_id INT
 )
 ROW FORMAT DELIMITED
-FIELDS TERMINATED BY '\t'
+FIELDS TERMINATED BY ','
+COLLECTION ITEMS TERMINATED BY '|'
 STORED AS TEXTFILE;
 
 -- Tạo bảng benefit
@@ -20,7 +21,8 @@ CREATE TABLE IF NOT EXISTS benefit (
     benefit_id INT
 )
 ROW FORMAT DELIMITED
-FIELDS TERMINATED BY '\t'
+FIELDS TERMINATED BY ','
+COLLECTION ITEMS TERMINATED BY '|'
 STORED AS TEXTFILE;
 
 -- Tạo bảng city
@@ -29,7 +31,8 @@ CREATE TABLE IF NOT EXISTS city (
     city_id INT
 )
 ROW FORMAT DELIMITED
-FIELDS TERMINATED BY '\t'
+FIELDS TERMINATED BY ','
+COLLECTION ITEMS TERMINATED BY '|'
 STORED AS TEXTFILE;
 
 -- Tạo bảng company
@@ -39,7 +42,8 @@ CREATE TABLE IF NOT EXISTS company (
     company_id INT
 )
 ROW FORMAT DELIMITED
-FIELDS TERMINATED BY '\t'
+FIELDS TERMINATED BY ','
+COLLECTION ITEMS TERMINATED BY '|'
 STORED AS TEXTFILE;
 
 -- Tạo bảng job_benefit
@@ -48,7 +52,8 @@ CREATE TABLE IF NOT EXISTS job_benefit (
     benefit_id INT
 )
 ROW FORMAT DELIMITED
-FIELDS TERMINATED BY '\t'
+FIELDS TERMINATED BY ','
+COLLECTION ITEMS TERMINATED BY '|'
 STORED AS TEXTFILE;
 
 -- Tạo bảng job_city
@@ -57,14 +62,15 @@ CREATE TABLE IF NOT EXISTS job_city (
     city_id INT
 )
 ROW FORMAT DELIMITED
-FIELDS TERMINATED BY '\t'
+FIELDS TERMINATED BY ','
+COLLECTION ITEMS TERMINATED BY '|'
 STORED AS TEXTFILE;
 
 
 --Load data
-LOAD DATA INPATH '/user/data/job.csv' INTO TABLE job;
-LOAD DATA INPATH '/user/data/benefit.csv' INTO TABLE benefit;
-LOAD DATA INPATH '/user/data/city.csv' INTO TABLE city;
-LOAD DATA INPATH '/user/data/company.csv' INTO TABLE company;
-LOAD DATA INPATH '/user/data/job_benefit.csv' INTO TABLE job_benefit;
-LOAD DATA INPATH '/user/data/job_city.csv' INTO TABLE job_city;
+LOAD DATA INPATH '/user/h2hhduser/warehouse/job.csv' INTO TABLE job;
+LOAD DATA INPATH '/user/h2hhduser/warehouse/benefit.csv' INTO TABLE benefit;
+LOAD DATA INPATH '/user/h2hhduser/warehouse/city.csv' INTO TABLE city;
+LOAD DATA INPATH '/user/h2hhduser/warehouse/company.csv' INTO TABLE company;
+LOAD DATA INPATH '/user/h2hhduser/warehouse/job_benefit.csv' INTO TABLE job_benefit;
+LOAD DATA INPATH '/user/h2hhduser/warehouse/job_city.csv' INTO TABLE job_city;

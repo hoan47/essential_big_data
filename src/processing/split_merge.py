@@ -44,10 +44,10 @@ job_city_df = job_city_df.merge(city_df, on='city', how='left')
 job_city_df = job_city_df[['jobId', 'city_id']]
 
 # Lưu từng bảng vào file CSV
-job_df.to_csv("job.csv", index=False, encoding='utf-8-sig', header=False, sep='\t')
-benefit_df.to_csv("benefit.csv", index=False, encoding='utf-8-sig', header=False, sep='\t')
-city_df.to_csv("city.csv", index=False, encoding='utf-8-sig', header=False, sep='\t')
-company_df.to_csv("company.csv", index=False, encoding='utf-8-sig', header=False, sep='\t')
-job_benefit_df.to_csv("job_benefit.csv", index=False, encoding='utf-8-sig', header=False, sep='\t')
-job_city_df.to_csv("job_city.csv", index=False, encoding='utf-8-sig', header=False, sep='\t')
+job_df.to_csv("job.csv", index=False, encoding='utf-8-sig', header=False)
+benefit_df.to_csv("benefit.csv", index=False, encoding='utf-8-sig', header=False)
+city_df.to_csv("city.csv", index=False, encoding='utf-8-sig', header=False)
+company_df.to_csv("company.csv", index=False, encoding='utf-8-sig', header=False)
+job_benefit_df.to_csv("job_benefit.csv", index=False, encoding='utf-8-sig', header=False)
+job_city_df.to_csv("job_city.csv", index=False, encoding='utf-8-sig', header=False)
 
