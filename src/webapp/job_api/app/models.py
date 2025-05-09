@@ -1,84 +1,146 @@
 from .database import get_hive_connection
 
 def get_jobs(filters):
-    global jobs
     try:
-        # Nếu chưa cache thì truy vấn Hive
+        conn = get_hive_connection()
+        if not conn:
+            return None, "Không thể kết nối Hive"
+        
+        cursor = conn.cursor()
+
+        # Base query
         query = """
             SELECT
-                j.jobId,
-                j.jobTitle,
-                j.jobUrl,
-                j.salaryMin,
-                j.salary,
-                j.approvedOn,
-                j.expiredOn,
-                j.salaryCurrency,
-                c.companyName,
-                c.companyLogo,
-                COLLECT_SET(b.benefit) AS benefits,
-                COLLECT_SET(ci.city) AS cities
-            FROM job j
-            LEFT JOIN company c ON j.company_id = c.company_id
-            LEFT JOIN job_benefit jb ON j.jobId = jb.jobId
-            LEFT JOIN benefit b ON jb.benefit_id = b.benefit_id
-            LEFT JOIN job_city jc ON j.jobId = jc.jobId
-            LEFT JOIN city ci ON jc.city_id = ci.city_id
-            GROUP BY
-                j.jobId,
-                j.jobTitle,
-                j.jobUrl,
-                j.salaryMin,
-                j.salary,
-                j.approvedOn,
-                j.expiredOn,
-                j.salaryCurrency,
-                c.companyName,
-                c.companyLogo
+                jobId,
+                jobTitle,
+                jobUrl,
+                companyName,
+                salaryMin,
+                salary,
+                approvedOn,
+                expiredOn,
+                split(benefitNames, ', ') as benefits_array,
+                split(cities, ', ') as cities_array,
+                companyLogo,
+                salaryCurrency
+            FROM merge_job
         """
 
-        conn = get_hive_connection()
-        cursor = conn.cursor()
+        # Build WHERE conditions
+        conditions = []
+
+        if filters.get('jobTitle'):
+            conditions.append(f"lower(jobTitle) LIKE '%{filters['jobTitle'].lower()}%'")
+
+        if filters.get('companyName'):
+            conditions.append(f"lower(companyName) LIKE '%{filters['companyName'].lower()}%'")
+
+        if filters.get('salaryMin'):
+            conditions.append(f"salaryMin >= {filters['salaryMin']}")
+
+        if filters.get('salary'):
+            conditions.append(f"salary >= {filters['salary']}")
+
+        if filters.get('salaryCurrency'):
+            conditions.append(f"salaryCurrency = '{filters['salaryCurrency']}'")
+
+        # benefitNames là list
+        if filters.get('benefitNames'):
+            benefit_conditions = [f"lower(benefitNames) LIKE '%{benefit.lower()}%'" for benefit in filters['benefitNames']]
+            conditions.append(f"({' OR '.join(benefit_conditions)})")
+
+        # cities là list
+        if filters.get('cities'):
+            city_conditions = [f"lower(cities) LIKE '%{city.lower()}%'" for city in filters['cities']]
+            conditions.append(f"({' OR '.join(city_conditions)})")
+
+        # Thêm WHERE nếu có điều kiện
+        if conditions:
+            query += " WHERE " + " AND ".join(conditions)
+
+        # Pagination
+        page = filters.get('page', 1)
+        items_per_page = filters.get('items_per_page', 10)
+        offset = (page - 1) * items_per_page
+
+        query += f" LIMIT {items_per_page}"
+
+        print("[QUERY]", query)
         cursor.execute(query)
         rows = cursor.fetchall()
         conn.close()
 
-        jobs = [{
-            'jobId': row[0],
-            'jobTitle': row[1],
-            'jobUrl': row[2],
-            'salaryMin': row[3],
-            'salary': row[4],
-            'approvedOn': row[5],
-            'expiredOn': row[6],
-            'salaryCurrency': row[7],
-            'companyName': row[8],
-            'companyLogo': row[9],
-            'benefits': row[10] if row[10] else [],
-            'cities': row[11] if row[11] else []
+        # Chuyển thành list dict
+        result = []
+        columns = [col[0] for col in cursor.description]
+        for row in rows:
+            result.append(dict(zip(columns, row)))
+
+        return result, None
+
+    except Exception as e:
+        return None, str(e)
+    
+def get_companies():
+    try:
+        conn = get_hive_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT
+                companyName,
+            FROM merge_job
+        """)
+        rows = cursor.fetchall()
+        conn.close()
+
+        companies = [{
+            'companyId': row[0],
+            'companyName': row[1],
+            'companyLogo': row[2]
         } for row in rows]
 
-        # Lọc dữ liệu từ cache
-        jobs = jobs
-        for key, value in filters.items():
-            if value:
-                if key == 'benefitNames':
-                    benefits = [b.strip() for b in value.split(',')]
-                    jobs = [job for job in jobs if any(b in job['benefits'] for b in benefits)]
-                elif key == 'cities':
-                    cities = [c.strip() for c in value.split(',')]
-                    jobs = [job for job in jobs if any(c in job['cities'] for c in cities)]
-                elif key == 'jobTitle':
-                    jobs = [job for job in jobs if value.lower() in (job['jobTitle'] or '').lower()]
-                elif key == 'companyName':
-                    jobs = [job for job in jobs if value.lower() in (job['companyName'] or '').lower()]
-                elif key == 'salaryMin':
-                    jobs = [job for job in jobs if job['salaryMin'] is not None and job['salaryMin'] >= float(value)]
-                elif key == 'salary':
-                    jobs = [job for job in jobs if job['salary'] is not None and job['salary'] <= float(value)]
-                else:
-                    jobs = [job for job in jobs if str(job.get(key)) == str(value)]
+        return companies, None
+    except Exception as e:
+        return None, str(e)
 
-        return jobs, None
+def get_benefits():
+    try:
+        conn = get_hive_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT
+                split(benefitNames, ', ') as benefits_array,
+            FROM merge_job
+        """)
+        rows = cursor.fetchall()
+        conn.close()
+
+        benefits = [{
+            'benefitId': row[0],
+            'benefit': row[1]
+        } for row in rows]
+
+        return benefits, None
+    except Exception as e:
+        return None, str(e)
+
+def get_cities():
+    try:
+        conn = get_hive_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT
+                split(cities, ', ') as cities_array,
+            FROM merge_job
+        """)
+        rows = cursor.fetchall()
+        conn.close()
+
+        cities = [{
+            'cityId': row[0],
+            'city': row[1]
+        } for row in rows]
+
+        return cities, None
     except Exception as e:
         return None, str(e)
