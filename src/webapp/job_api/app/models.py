@@ -86,9 +86,8 @@ def get_companies():
         conn = get_hive_connection()
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT
-                companyName,
-            FROM merge_job
+            SELECT company_id, companyName, companyLogo
+            FROM company
         """)
         rows = cursor.fetchall()
         conn.close()
@@ -108,9 +107,8 @@ def get_benefits():
         conn = get_hive_connection()
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT
-                split(benefitNames, ', ') as benefits_array,
-            FROM merge_job
+            SELECT benefit_id, benefit
+            FROM benefit
         """)
         rows = cursor.fetchall()
         conn.close()
@@ -129,9 +127,8 @@ def get_cities():
         conn = get_hive_connection()
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT
-                split(cities, ', ') as cities_array,
-            FROM merge_job
+            SELECT city_id, city
+            FROM city
         """)
         rows = cursor.fetchall()
         conn.close()
