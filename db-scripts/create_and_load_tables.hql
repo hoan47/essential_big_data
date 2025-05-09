@@ -66,11 +66,31 @@ FIELDS TERMINATED BY ','
 COLLECTION ITEMS TERMINATED BY '|'
 STORED AS TEXTFILE;
 
+CREATE TABLE merge_job (
+    jobId STRING,
+    jobTitle STRING,
+    jobUrl STRING,
+    companyName STRING,
+    salaryMin BIGINT,
+    salary BIGINT,
+    approvedOn STRING,
+    expiredOn STRING,
+    benefitNames ARRAY<STRING>,
+    cities ARRAY<STRING>,
+    companyLogo STRING,
+    salaryCurrency STRING
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+COLLECTION ITEMS TERMINATED BY '|'
+STORED AS TEXTFILE
+TBLPROPERTIES ("skip.header.line.count"="1");
+
 
 --Load data
-LOAD DATA INPATH '/user/h2hhduser/warehouse/job.csv' INTO TABLE job;
-LOAD DATA INPATH '/user/h2hhduser/warehouse/benefit.csv' INTO TABLE benefit;
-LOAD DATA INPATH '/user/h2hhduser/warehouse/city.csv' INTO TABLE city;
-LOAD DATA INPATH '/user/h2hhduser/warehouse/company.csv' INTO TABLE company;
-LOAD DATA INPATH '/user/h2hhduser/warehouse/job_benefit.csv' INTO TABLE job_benefit;
-LOAD DATA INPATH '/user/h2hhduser/warehouse/job_city.csv' INTO TABLE job_city;
+LOAD DATA INPATH '/user/b2hhduser/data/job.csv' INTO TABLE job;
+LOAD DATA INPATH '/user/b2hhduser/data/benefit.csv' INTO TABLE benefit;
+LOAD DATA INPATH '/user/b2hhduser/data/city.csv' INTO TABLE city;
+LOAD DATA INPATH '/user/b2hhduser/data/company.csv' INTO TABLE company;
+LOAD DATA INPATH '/user/b2hhduser/data/job_benefit.csv' INTO TABLE job_benefit;
+LOAD DATA INPATH '/user/b2hhduser/data/job_city.csv' INTO TABLE job_city;
