@@ -10,10 +10,13 @@ CREATE TABLE IF NOT EXISTS job (
     salaryCurrency STRING,
     company_id INT
 )
-ROW FORMAT DELIMITED
-FIELDS TERMINATED BY ','
-COLLECTION ITEMS TERMINATED BY '|'
-STORED AS TEXTFILE
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde' 
+WITH SERDEPROPERTIES ( 
+    "separatorChar" = ",", 
+    "quoteChar" = "\"", 
+    "escapeChar" = "\\" 
+) 
+STORED AS TEXTFILE 
 TBLPROPERTIES ("skip.header.line.count"="1");
 
 -- Tạo bảng benefit
@@ -21,10 +24,13 @@ CREATE TABLE IF NOT EXISTS benefit (
     benefit STRING,
     benefit_id INT
 )
-ROW FORMAT DELIMITED
-FIELDS TERMINATED BY ','
-COLLECTION ITEMS TERMINATED BY '|'
-STORED AS TEXTFILE
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde' 
+WITH SERDEPROPERTIES ( 
+    "separatorChar" = ",", 
+    "quoteChar" = "\"", 
+    "escapeChar" = "\\" 
+) 
+STORED AS TEXTFILE 
 TBLPROPERTIES ("skip.header.line.count"="1");
 
 -- Tạo bảng city
@@ -32,10 +38,13 @@ CREATE TABLE IF NOT EXISTS city (
     city STRING,
     city_id INT
 )
-ROW FORMAT DELIMITED
-FIELDS TERMINATED BY ','
-COLLECTION ITEMS TERMINATED BY '|'
-STORED AS TEXTFILE
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde' 
+WITH SERDEPROPERTIES ( 
+    "separatorChar" = ",", 
+    "quoteChar" = "\"", 
+    "escapeChar" = "\\" 
+) 
+STORED AS TEXTFILE 
 TBLPROPERTIES ("skip.header.line.count"="1");
 
 -- Tạo bảng company
@@ -44,10 +53,13 @@ CREATE TABLE IF NOT EXISTS company (
     companyLogo STRING,
     company_id INT
 )
-ROW FORMAT DELIMITED
-FIELDS TERMINATED BY ','
-COLLECTION ITEMS TERMINATED BY '|'
-STORED AS TEXTFILE
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde' 
+WITH SERDEPROPERTIES ( 
+    "separatorChar" = ",", 
+    "quoteChar" = "\"", 
+    "escapeChar" = "\\" 
+) 
+STORED AS TEXTFILE 
 TBLPROPERTIES ("skip.header.line.count"="1");
 
 -- Tạo bảng job_benefit
@@ -55,10 +67,13 @@ CREATE TABLE IF NOT EXISTS job_benefit (
     jobId STRING,
     benefit_id INT
 )
-ROW FORMAT DELIMITED
-FIELDS TERMINATED BY ','
-COLLECTION ITEMS TERMINATED BY '|'
-STORED AS TEXTFILE
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde' 
+WITH SERDEPROPERTIES ( 
+    "separatorChar" = ",", 
+    "quoteChar" = "\"", 
+    "escapeChar" = "\\" 
+) 
+STORED AS TEXTFILE 
 TBLPROPERTIES ("skip.header.line.count"="1");
 
 -- Tạo bảng job_city
@@ -66,10 +81,13 @@ CREATE TABLE IF NOT EXISTS job_city (
     jobId STRING,
     city_id INT
 )
-ROW FORMAT DELIMITED
-FIELDS TERMINATED BY ','
-COLLECTION ITEMS TERMINATED BY '|'
-STORED AS TEXTFILE
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde' 
+WITH SERDEPROPERTIES ( 
+    "separatorChar" = ",", 
+    "quoteChar" = "\"", 
+    "escapeChar" = "\\" 
+) 
+STORED AS TEXTFILE 
 TBLPROPERTIES ("skip.header.line.count"="1");
 
 CREATE TABLE merge_job (
@@ -86,10 +104,13 @@ CREATE TABLE merge_job (
     companyLogo STRING,
     salaryCurrency STRING
 )
-ROW FORMAT DELIMITED
-FIELDS TERMINATED BY ','
-COLLECTION ITEMS TERMINATED BY '|'
-STORED AS TEXTFILE
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde' 
+WITH SERDEPROPERTIES ( 
+    "separatorChar" = ",", 
+    "quoteChar" = "\"", 
+    "escapeChar" = "\\" 
+) 
+STORED AS TEXTFILE 
 TBLPROPERTIES ("skip.header.line.count"="1");
 
 
