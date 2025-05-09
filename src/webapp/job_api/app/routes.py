@@ -1,6 +1,6 @@
 from flask import jsonify, request
 from .middleware import require_api_key
-from .models import get_benefits, get_cities, get_companies, get_jobs
+from .models import get_benefits, get_cities, get_companies, get_job_titles, get_jobs
 
 def init_routes(app):
     @app.route('/jobs', methods=['GET'])
@@ -48,6 +48,13 @@ def init_routes(app):
     @app.route('/cities', methods=['GET'])
     def get_cities_route():
         cities, error = get_cities()
+        if error:
+            return jsonify({'error': error}), 500
+        return jsonify(cities)
+
+    @app.route('/job_titles', methods=['GET'])
+    def get_jobTitles_route():
+        cities, error = get_job_titles()
         if error:
             return jsonify({'error': error}), 500
         return jsonify(cities)

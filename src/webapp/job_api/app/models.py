@@ -81,6 +81,26 @@ def get_jobs(filters):
     except Exception as e:
         return None, str(e)
     
+def get_job_titles():
+    try:
+        conn = get_hive_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT DISTINCT jobTitle
+            FROM merge_job
+        """)
+        rows = cursor.fetchall()
+        conn.close()
+
+        job_titles = [{
+            'jobTitle': row[0]
+        } for row in rows]
+
+        return job_titles, None
+    except Exception as e:
+        return None, str(e)
+    
+
 def get_companies():
     try:
         conn = get_hive_connection()
