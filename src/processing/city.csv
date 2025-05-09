@@ -1,88 +1,88 @@
 ﻿city,city_id
-Hồ Chí Minh,1
-Hà Nội,2
-Bắc Kạn,3
-Yên Bái,4
-Điện Biên,5
-Đồng Nai,6
-Bình Dương,7
-Đà Nẵng,8
-Bắc Giang,9
-Bắc Ninh,10
-Hải Dương,11
-Hưng Yên,12
-Cần Thơ,13
-An Giang,14
-Kiên Giang,15
-Tiền Giang,16
-Ninh Bình,17
-Hải Phòng,18
-Quảng Ninh,19
-Quốc tế,20
-Hà Tĩnh,21
-Tuyên Quang,22
-Hà Nam,23
-Tây Ninh,24
-Quảng Trị,25
-Long An,26
-Hậu Giang,27
-Bà Rịa - Vũng Tàu,28
-Bình Phước,29
-Hòa Bình,30
-Khác,31
-Nam Định,32
-Thanh Hóa,33
-Nghệ An,34
-Quảng Bình,35
-Thừa Thiên Huế,36
-Lâm Đồng,37
-Vĩnh Phúc,38
-Gia Lai,39
-Thái Nguyên,40
-Thái Bình,41
-Phú Thọ,42
-Khánh Hòa,43
-Bình Định,44
-Phú Yên,45
-Ninh Thuận,46
-Vĩnh Long,47
-Bến Tre,48
-Đồng Tháp,49
-Bình Thuận,50
-Quảng Nam,51
-Quảng Ngãi,52
-Cao Bằng,53
-ĐBSCL,54
-Lạng Sơn,55
-Đắk Lắk,56
-Lào Cai,57
-Sóc Trăng,58
-Bạc Liêu,59
-Kon Tum,60
-Trà Vinh,61
-Cà Mau,62
-Hà Giang,63
-Sơn La,64
-KV Nam Trung Bộ,65
-Dak Lak,66
-Lai Châu,67
-KV Đông Nam Bộ,68
-KV Bắc Trung Bộ,69
-Phnompenh,70
-Đồng Bằng Sông Cửu Long,71
-KV Tây Nguyên,72
-Dak Nông,73
-Toàn quốc,74
-Thừa Thiên- Huế,75
-Kuala Lumpur,76
-Bắc Cạn,77
-Đồng Bằng Sông Hồng,78
-Singapore,79
-Indonesia,80
-Kratie,81
-Attapeu,82
-Jakarta,83
-Yokohama,84
-Vientiane,85
-Xiangkhouang,86
-Bangkok,87
+Quốc tế,1
+Hà Tĩnh,2
+Hà Nội,3
+Hồ Chí Minh,4
+Ninh Bình,5
+Hưng Yên,6
+Tuyên Quang,7
+Hà Nam,8
+Tiền Giang,9
+Đồng Nai,10
+Bà Rịa - Vũng Tàu,11
+Hải Dương,12
+Hải Phòng,13
+Bắc Ninh,14
+Đà Nẵng,15
+Khác,16
+Bình Dương,17
+Quảng Ninh,18
+Thanh Hóa,19
+Nghệ An,20
+Vĩnh Phúc,21
+Nam Định,22
+Thừa Thiên Huế,23
+Gia Lai,24
+Khánh Hòa,25
+Lâm Đồng,26
+Bình Định,27
+Phú Yên,28
+Ninh Thuận,29
+Vĩnh Long,30
+An Giang,31
+Bến Tre,32
+Thái Nguyên,33
+Bình Phước,34
+Tây Ninh,35
+Bắc Giang,36
+Lào Cai,37
+Kiên Giang,38
+Phú Thọ,39
+Thái Bình,40
+Long An,41
+Cần Thơ,42
+KV Nam Trung Bộ,43
+Quảng Nam,44
+Dak Lak,45
+Bình Thuận,46
+Lai Châu,47
+Kon Tum,48
+KV Đông Nam Bộ,49
+KV Bắc Trung Bộ,50
+Đồng Tháp,51
+Hòa Bình,52
+Quảng Ngãi,53
+Hậu Giang,54
+Sóc Trăng,55
+ĐBSCL,56
+Kuala Lumpur,57
+Toàn quốc,58
+Quảng Trị,59
+Lạng Sơn,60
+Đồng Bằng Sông Cửu Long,61
+Thừa Thiên- Huế,62
+Trà Vinh,63
+Bạc Liêu,64
+Quảng Bình,65
+Dak Nông,66
+Sơn La,67
+Cao Bằng,68
+Điện Biên,69
+Bắc Kạn,70
+Đắk Lắk,71
+Yên Bái,72
+Cà Mau,73
+Hà Giang,74
+Đồng Bằng Sông Hồng,75
+Bắc Cạn,76
+Attapeu,77
+Singapore,78
+KV Tây Nguyên,79
+Phnompenh,80
+Indonesia,81
+Kratie,82
+Xiangkhouang,83
+Bangkok,84
+Jakarta,85
+Yokohama,86
+Vientiane,87

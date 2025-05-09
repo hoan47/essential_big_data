@@ -36,6 +36,8 @@ for item in merged_data:
         unique_jobs.add(key)
         filtered_data.append(item)
 
+# Sắp xếp theo approvedOn (ngày duyệt) theo thứ tự giảm dần
+filtered_data.sort(key=lambda x: x['approvedOn'], reverse=True)
 
 # Xác định các cột dựa theo keys
 fieldnames = [
