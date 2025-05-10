@@ -1,3 +1,35 @@
+--select:
+SELECT 
+    j.jobTitle,
+    j.jobUrl,
+    c.companyName,
+    j.salaryMin,
+    j.salary,
+    j.approvedOn,
+    j.expiredOn,
+    CONCAT_WS(',', COLLECT_SET(b.benefit)) AS benefitNames,
+    CONCAT_WS(',', COLLECT_SET(ct.city)) AS cities,
+    c.companyLogo,
+    j.salaryCurrency
+FROM 
+    job j
+    INNER JOIN company c ON j.company_id = c.company_id
+    LEFT JOIN job_city jc ON j.jobId = jc.jobId
+    LEFT JOIN city ct ON jc.city_id = ct.city_id
+    LEFT JOIN job_benefit jb ON j.jobId = jb.jobId
+    LEFT JOIN benefit b ON jb.benefit_id = b.benefit_id
+GROUP BY 
+    j.jobTitle,
+    j.jobUrl,
+    c.companyName,
+    j.salaryMin,
+    j.salary,
+    j.approvedOn,
+    j.expiredOn,
+    c.companyLogo,
+    j.salaryCurrency;
+
+
 --insert:
 -- Câu lệnh:   INSERT OVERWRITE TABLE name_table
 --             SELECT * FROM name_table
