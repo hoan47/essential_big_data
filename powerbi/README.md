@@ -1,9 +1,9 @@
 # essential_big_data
 
 essential_big_data/
-├── configs/                # File cấu hình (system, hadoop, hive, mysql)
-├── db-scripts/             # Script làm việc với cơ sở dữ liệu (hive, mongoDB)
-├── powerbi/                # Báo cáo và dashboard Power BI để trực quan hóa (kết nối tới hive)
+├── configs/                # File cấu hình
+├── db-scripts/             # Script làm việc với cơ sở dữ liệu (3)
+├── powerbi/                # Báo cáo và dashboard Power BI để trực quan hóa
 ├── src/                    # Mã nguồn ứng dụng
 │   ├── crawler/            # Script thu thập dữ liệu (1)
 │   ├── mapreduce/          # Script MapReduce để xử lý phân tán (Hadoop)
