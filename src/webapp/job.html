@@ -648,8 +648,8 @@
             }
 
             jobs.forEach(job => {
-                const benefits = JSON.parse(job.benefits_array || "[]");
-                const cities = JSON.parse(job.cities_array || "[]");
+                const benefits = job.benefitnames ? JSON.parse(job.benefitnames) : [];
+                const cities = job.cities ? JSON.parse(job.cities) : [];
 
                 const approvedDate = new Date(job.approvedon);
                 const expiredDate = new Date(job.expiredon);
@@ -674,7 +674,7 @@
                     <div class="job-card">
                         <div class="job-header">
                             <div class="job-company">
-                                <img src="${job.companylogo || 'https://via.placeholder.com/48'}" alt="Company Logo" class="company-logo">
+                                <img src="${job.companylogo}" alt="Company Logo" class="company-logo">
                                 <span class="company-name">${job.companyname || 'Không rõ'}</span>
                             </div>
                             <h3 class="job-title">${job.jobtitle || 'Không rõ'}</h3>

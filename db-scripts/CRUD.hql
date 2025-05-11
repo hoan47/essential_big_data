@@ -43,8 +43,8 @@ GROUP BY
     j.approvedOn,
     j.expiredOn,
     c.companyLogo,
-    j.salaryCurrency;
-
+    j.salaryCurrency
+LIMIT 1;
 
 --U:
 INSERT OVERWRITE TABLE job

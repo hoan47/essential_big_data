@@ -20,8 +20,8 @@ def get_jobs(filters):
                 salary,
                 approvedOn,
                 expiredOn,
-                split(benefitNames, ', ') as benefits_array,
-                split(cities, ', ') as cities_array,
+                benefitNames,
+                cities,
                 companyLogo,
                 salaryCurrency
             FROM merge_job
@@ -39,12 +39,11 @@ def get_jobs(filters):
         if filters.get('salaryCurrency'):
             conditions.append(f"salaryCurrency = '{filters['salaryCurrency']}'")
         if filters.get('benefitNames'):
-            benefit_conditions = [f"lower(benefitNames) LIKE '%{benefit.lower()}%'" for benefit in filters['benefitNames']]
+            benefit_conditions = [f"array_contains(benefitNames, '{benefit}')" for benefit in filters['benefitNames']]
             conditions.append(f"({' OR '.join(benefit_conditions)})")
         if filters.get('cities'):
-            city_conditions = [f"lower(cities) LIKE '%{city.lower()}%'" for city in filters['cities']]
+            city_conditions = [f"array_contains(cities, '{city}')" for city in filters['cities']]
             conditions.append(f"({' OR '.join(city_conditions)})")
-
         if conditions:
             base_query += " WHERE " + " AND ".join(conditions)
 
@@ -89,8 +88,8 @@ def get_job_titles(filters):
         """
 
         conditions = []
-        if filters.get('jobTitle'):
-            job_title = filters['jobTitle'].lower()
+        if filters.get('job_title'):
+            job_title = filters['job_title'].lower()
             conditions.append(f"lower(jobTitle) LIKE '%{job_title}%'")
 
         if conditions:
@@ -127,8 +126,8 @@ def get_companies(filters):
         """
 
         conditions = []
-        if filters.get('companyName'):
-            company_name = filters['companyName'].lower()
+        if filters.get('company_name'):
+            company_name = filters['company_name'].lower()
             conditions.append(f"lower(companyName) LIKE '%{company_name}%'")
 
         if conditions:
