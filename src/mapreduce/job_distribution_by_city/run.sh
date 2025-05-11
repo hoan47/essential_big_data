@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set up environment variables
-INPUT_PATH="/user/hive/warehouse/work.db/job_city"
+INPUT_PATH="/user/hive/warehouse/work_load.db/job_city"
 OUTPUT_PATH="/user/b2hhduser/job_distribution_by_city_output"
 
 # Remove output directory if it exists
